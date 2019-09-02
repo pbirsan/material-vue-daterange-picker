@@ -17,28 +17,28 @@
  * Inspired by bootstrap.daterangepicker
  */
 
- * {
-   box-sizing: border-box;
- }
+* {
+    box-sizing: border-box;
+}
 
 /**
  * mixins
  */
- @mixin get-opens-arrow ($val: 7px, $is-before: true) {
-  top: -$val;
-  $bg: if($is-before, #ccc, #fff);
+@mixin get-opens-arrow ($val: 7px, $is-before: true) {
+    top: -$val;
+    $bg: if($is-before, #ccc, #fff);
 
-  border-right: $val solid transparent;
-  border-bottom: $val solid $bg;
-  border-left: $val solid transparent;
+    border-right: $val solid transparent;
+    border-bottom: $val solid $bg;
+    border-left: $val solid transparent;
 }
 
 %center-block {
-  left: 0;
-  right: 0;
-  width: 0;
-  margin-left: auto;
-  margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /**
@@ -59,41 +59,43 @@
 
 */
 @mixin control-opens-arrow-pos ($direction: left) {
-  $reverse-direction: if($direction == left, right, left);
+    $reverse-direction: if($direction == left, right, left);
 
-  &.opens-arrow-pos-#{$direction} {
-    top: 40px;
-    @if $direction != center {
-      #{$direction}: 10px;
-      // 这边的 auto 做了什么？
-      #{$reverse-direction}: auto;
-    }
+    &.opens-arrow-pos-#{$direction} {
+        top: 40px;
 
-    &::before {
-      @if $direction != center {
-        #{$direction}: 9px;
-      }
-      @else {
-        @extend %center-block;
-      }
-    }
+        @if $direction != center {
+            #{$direction}: 10px;
+            // 这边的 auto 做了什么？
+            #{$reverse-direction}: auto;
+        }
 
-    &::after {
-      @if $direction != center {
-        #{$direction}: 10px;
-      }
-      @else {
-        @extend %center-block;
-      }
+        &::before {
+            @if $direction != center {
+                #{$direction}: 9px;
+            }
+            @else {
+                @extend %center-block;
+            }
+        }
+
+        &::after {
+            @if $direction != center {
+                #{$direction}: 10px;
+            }
+            @else {
+                @extend %center-block;
+            }
+        }
     }
-  }
 }
 
 
 // md-date-range-picker <-> mdrp
 .mdrp-root {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: flex;
+    flex-grow: 1;
 }
 
 $prefix-class: mdrp__panel;
@@ -101,101 +103,96 @@ $prefix-class: mdrp__panel;
 .#{$prefix-class} {
     font-size: 15px;
     line-height: 1em;
-
     position: absolute;
     z-index: 3001;
     top: 100px;
     left: 20px;
-
     width: 278px;
     max-width: none;
     margin-top: 7px;
     padding: 0;
-
     color: inherit;
     border: 1px solid #ddd;
     border-radius: 4px;
     background-color: #fff;
 
     &.show-calendar {
-      display: block;
+        display: block;
     }
-
     // TODO what these code do ?
     &::before,
     &::after {
-      position: absolute;
-      display: inline-block;
-      border-bottom-color: red;
-      content: "";
+        position: absolute;
+        display: inline-block;
+        border-bottom-color: red;
+        content: "";
     }
 
     &::before {
-      @include get-opens-arrow();
+        @include get-opens-arrow();
     }
 
     &::after {
-      @include get-opens-arrow(6px, false);
+        @include get-opens-arrow(6px, false);
     }
 
     & {
-      @include control-opens-arrow-pos (left);
-      @include control-opens-arrow-pos (right);
-      @include control-opens-arrow-pos (center);
+        @include control-opens-arrow-pos (left);
+        @include control-opens-arrow-pos (right);
+        @include control-opens-arrow-pos (center);
     }
 
     &.dropdown-menu {
-      // TODO max-width: none; 什么作用？
-      max-width: none;
-      // TODO z-index best practice ？？
-      z-index: 9;
+        // TODO max-width: none; 什么作用？
+        max-width: none;
+        // TODO z-index best practice ？？
+        z-index: 9;
     }
 
     .calendar-table {
-      display: none;
-      max-width: 270px;
+        display: none;
+        max-width: 270px;
     }
 
     &.show-calendar .calendar-table {
-      display: block;
+        display: block;
     }
-
 }
 
 /*  Larger Screen Styling */
 @media (min-width: 564px) {
-  // TODO width auto 的使用场景
-  .#{$prefix-class} {
-    width: auto;
+    // TODO width auto 的使用场景
+    .#{$prefix-class} {
+        width: auto;
 
-    &.show-calendar {
-      display: inline-flex;
-    }
+        &.show-calendar {
+            display: inline-flex;
+        }
 
-    .calendar-table {
-      &.left {
-        padding: 8px 0 8px 8px;
-      }
-      // 为何右边是 8px 8px 8px 0; 呢，也就是为何左边会有 8px ?
-      &.right {
-        padding: 8px;
-      }
+        .calendar-table {
+            &.left {
+                padding: 8px 0 8px 8px;
+            }
+            // 为何右边是 8px 8px 8px 0; 呢，也就是为何左边会有 8px ?
+            &.right {
+                padding: 8px;
+            }
+        }
     }
-  }
 }
 
 /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .slide-fade-enter-active {
-  transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .slide-fade-leave-active {
-  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter,
 .slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
+    transform: translateX(10px);
+    opacity: 0;
 }
